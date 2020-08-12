@@ -19,6 +19,11 @@ GET        /basket              controllers.BasketController.getProducts
 GET        /register            controllers.RegisterController.registerUser
 GET        /settings            controllers.SettingsController.getSettings
 GET        /user                controllers.UserController.getProfile
-GET        /product             controllers.ProductController.getData
+GET        /product             controllers.ProductController.getProducts
 GET        /payment             controllers.PaymentController.pay
+GET     /products                   controllers.ProductController.getProducts
+GET     /addproduct                 controllers.ProductController.addProduct
+POST    /addproducthandle           controllers.ProductController.addProductHandle
+GET     /updateproduct/:id          controllers.ProductController.updateProduct(id: Int)
+POST    /updateproducthandle        controllers.ProductController.updateProductHandle
       
