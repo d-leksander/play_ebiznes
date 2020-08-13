@@ -1,0 +1,11 @@
+@(favourites: Seq[Favourite])
+<ul>
+    @for(favourite <- favourites) {
+        <li>
+            <b>@favourite.idFavourites</b>
+            @favourite.idUsers
+            @favourite.idProducts
+            <a href="@controllers.routes.FavouriteController.updateFavourite(favourite.idFavourites)">Edit</a>
+        </li>
+    }
+</ul>

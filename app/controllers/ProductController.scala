@@ -1,18 +1,17 @@
 package controllers
 
 import javax.inject._
-import models.{Category, CategoryRepository, Product, ProductRepository}
+import models._
 import play.api.data.Form
 import play.api.data.Forms._
 import play.api.mvc._
-import scala.concurrent.{ExecutionContext, Future}
-import scala.util.{Failure, Success}
-
-import scala.concurrent.ExecutionContext
+import scala.concurrent.duration.Duration
+import scala.concurrent.{Await, ExecutionContext, Future}
 
 
 @Singleton
-class ProductController @Inject()(productsRepo: ProductRepository, categoryRepo: CategoryRepository, cc: MessagesControllerComponents)(implicit ec: ExecutionContext) extends MessagesAbstractController(cc) {
+class ProductController @Inject()(productsRepo: ProductRepository, categoryRepo: CategoryRepository, photoRepo: PhotoRepository, deliveryRepo: DeliveryRepository,
+                                  cc: MessagesControllerComponents)(implicit ec: ExecutionContext) extends MessagesAbstractController(cc) {
 
   val productForm: Form[CreateProductForm] = Form {
     mapping(
@@ -20,6 +19,9 @@ class ProductController @Inject()(productsRepo: ProductRepository, categoryRepo:
       "description" -> nonEmptyText,
       "idCategories" -> number,
       "price" -> number,
+      "idDelivery" -> number,
+      "idPhotos" -> number,
+
     )(CreateProductForm.apply)(CreateProductForm.unapply)
   }
 
@@ -30,18 +32,20 @@ class ProductController @Inject()(productsRepo: ProductRepository, categoryRepo:
       "description" -> nonEmptyText,
       "idCategories" -> number,
       "price" -> number,
+      "idDelivery" -> number,
+      "idPhotos" -> number,
     )(UpdateProductForm.apply)(UpdateProductForm.unapply)
   }
 
   def getProducts: Action[AnyContent] = Action.async { implicit request =>
     val products = productsRepo.list()
-    products.map(products => Ok(views.html.products(products)))
+    products.map(products => Ok(views.html.product.products(products)))
   }
 
   def getProduct(id: Int): Action[AnyContent] = Action.async { implicit request =>
     val produkt = productsRepo.getByIdOption(id)
     produkt.map(product => product match {
-      case Some(p) => Ok(views.html.product(p))
+      case Some(p) => Ok(views.html.product.product(p))
       case None => Redirect(routes.ProductController.getProducts())
     })
   }
@@ -52,36 +56,33 @@ class ProductController @Inject()(productsRepo: ProductRepository, categoryRepo:
   }
 
   def updateProduct(id: Int): Action[AnyContent] = Action.async { implicit request: MessagesRequest[AnyContent] =>
-    var categ: Seq[Category] = Seq[Category]()
-    val categories = categoryRepo.list().onComplete {
-      case Success(cat) => categ = cat
-      case Failure(_) => print("fail")
-    }
+    val photos = Await.result(photoRepo.list(), Duration.Inf)
+    val deliverys = Await.result(deliveryRepo.list(), Duration.Inf)
+    val categories = Await.result(categoryRepo.list(), Duration.Inf)
+    val product = Await.result(productsRepo.getById(id), Duration.Inf)
+    Future.successful {
+      val prodForm = updateProductForm.fill(UpdateProductForm(
+        product.idProducts, product.name, product.description, product.idCategories, product.price, product.idDelivery, product.idPhotos))
+      Ok(views.html.product.productupdate(prodForm, categories, deliverys, photos))
 
+  }
 
-  val produkt = productsRepo.getById(id)
-     produkt.map(product => {
-        val prodForm = updateProductForm.fill(UpdateProductForm(product.idProducts, product.name, product.description, product.idCategories, product.price))
-        Ok(views.html.productupdate(prodForm, categ))
-      })
-    }
+  }
 
 
  	  def updateProductHandle = Action.async { implicit request =>
-  var categ: Seq[Category] = Seq[Category]()
-  val categories = categoryRepo.list().onComplete {
-    case Success(cat) => categ = cat
-    case Failure(_) => print("fail")
-  }
+      val categ: Seq[Category] = Seq[Category]()
+      val photos: Seq[Photo] = Seq[Photo]()
+      val deliverys: Seq[Delivery] = Seq[Delivery]()
 
   updateProductForm.bindFromRequest.fold(
     errorForm => {
       Future.successful(
-        BadRequest(views.html.productupdate(errorForm, categ))
+        BadRequest(views.html.product.productupdate(errorForm, categ, deliverys, photos))
       )
     },
     product => {
-      productsRepo.update(product.idProducts, Product(product.idProducts, product.name, product.description, product.idCategories, product.price)).map { _ =>
+      productsRepo.update(product.idProducts, Product(product.idProducts, product.name, product.description, product.idCategories, product.price, product.idDelivery, product.idPhotos)).map { _ =>
         Redirect(routes.ProductController.updateProduct(product.idProducts)).flashing("success" -> "product updated")
       }
     }
@@ -90,25 +91,29 @@ class ProductController @Inject()(productsRepo: ProductRepository, categoryRepo:
 
 
   def addProduct: Action[AnyContent] = Action.async { implicit request: MessagesRequest[AnyContent] =>
-    val categories = categoryRepo.list()
-    categories.map(cat => Ok(views.html.productadd(productForm, cat)))
+    val photos = Await.result(photoRepo.list(), Duration.Inf)
+    val deliverys = Await.result(deliveryRepo.list(), Duration.Inf)
+    val categories = Await.result(categoryRepo.list(), Duration.Inf)
+    Future.successful {
+    Ok(views.html.product.productadd(productForm, categories, deliverys, photos))
+  }
+
   }
 
   def addProductHandle = Action.async { implicit request =>
-    var categ: Seq[Category] = Seq[Category]()
-    val categories = categoryRepo.list().onComplete {
-      case Success(cat) => categ = cat
-      case Failure(_) => print("fail")
-    }
+    val photos = Await.result(photoRepo.list(), Duration.Inf)
+    val deliverys = Await.result(deliveryRepo.list(), Duration.Inf)
+    val categ = Await.result(categoryRepo.list(), Duration.Inf)
+
 
     productForm.bindFromRequest.fold(
       errorForm => {
         Future.successful(
-          BadRequest(views.html.productadd(errorForm, categ))
+          BadRequest(views.html.product.productadd(errorForm, categ, deliverys, photos))
         )
       },
       product => {
-        productsRepo.create(product.name, product.description, product.idCategories, product.price).map { _ =>
+        productsRepo.create(product.name, product.description, product.idCategories, product.price, product.idDelivery, product.idPhotos).map { _ =>
           Redirect(routes.ProductController.addProduct()).flashing("success" -> "product.created")
         }
       }
@@ -117,6 +122,6 @@ class ProductController @Inject()(productsRepo: ProductRepository, categoryRepo:
 
 }
 
-case class CreateProductForm(name: String, description: String, idCategories: Int, price: Int)
+case class CreateProductForm(name: String, description: String, idCategories: Int, price: Int, idDelivery: Int, idPhotos: Int)
 
-case class UpdateProductForm(idProducts: Int, name: String, description: String, idCategories: Int, price: Int)
+case class UpdateProductForm(idProducts: Int, name: String, description: String, idCategories: Int, price: Int, idDelivery: Int, idPhotos: Int)

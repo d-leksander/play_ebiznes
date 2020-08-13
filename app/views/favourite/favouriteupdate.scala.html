@@ -1,0 +1,34 @@
+@(favourite: Form[UpdateFavouriteForm], users: Seq[User], products: Seq[Product])(implicit request: MessagesRequestHeader, flash: Flash)
+
+@import helper._
+
+@flash.get("success").getOrElse("")
+
+@form(routes.FavouriteController.updateFavouriteHandle()) {
+    @helper.CSRF.formField
+    <input name="idFavourites" id="idFavourites" value="@favourite("idFavourites").value" type="hidden" />
+
+    <select name="idUsers" id="idUsers">
+    @for(user <- users) {
+        @if(user.idUsers.toString == favourite("idUsers").value.getOrElse(0)) {
+            <option value="@user.idUsers" selected>@user.email</option>
+        } else {
+            <option value="@user.idUsers">@user.email</option>
+        }
+    }
+    </select>
+
+    <select name="idProducts" id="idProducts">
+    @for(product <- products) {
+        @if(product.idProducts.toString == favourite("idProducts").value.getOrElse(0)) {
+            <option value="@product.idProducts" selected>@product.name</option>
+        } else {
+            <option value="@product.idProducts">@product.name</option>
+        }
+    }
+    </select>
+
+    <div class="buttons">
+        <input type="submit" value="Update Favourite"/>
+    </div>
+}

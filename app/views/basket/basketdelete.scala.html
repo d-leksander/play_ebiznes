@@ -1,0 +1,16 @@
+@(basket: Form[DeleteBasketForm])(implicit request: MessagesRequestHeader, flash: Flash)
+
+@import helper._
+
+@flash.get("success").getOrElse("")
+
+@form(routes.BasketController.deleteBasketHandle()) {
+    @helper.CSRF.formField
+
+    <b>Do you want to delete basket?</b>
+    <input name="idBaskets" id="idBaskets" value="@basket("idBaskets").value" disabled/>
+
+    <div class="buttons">
+        <input type="submit" value="Delete Basket"/>
+    </div>
+}

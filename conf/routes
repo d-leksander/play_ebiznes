@@ -6,24 +6,75 @@
 # An example controller showing a sample home page
 GET     /                           controllers.HomeController.index
 # An example controller showing how to use dependency injection
-GET     /count                      controllers.CountController.count
+
 # An example controller showing how to write asynchronous code
 GET     /message                    controllers.AsyncController.message
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
 
-GET        /login               controllers.LoginController.login
-GET        /logout              controllers.LoginController.logout
-GET        /basket              controllers.BasketController.getProducts
-GET        /register            controllers.RegisterController.registerUser
-GET        /settings            controllers.SettingsController.getSettings
-GET        /user                controllers.UserController.getProfile
-GET        /product             controllers.ProductController.getProducts
-GET        /payment             controllers.PaymentController.pay
-GET     /products                   controllers.ProductController.getProducts
-GET     /addproduct                 controllers.ProductController.addProduct
-POST    /addproducthandle           controllers.ProductController.addProductHandle
-GET     /updateproduct/:id          controllers.ProductController.updateProduct(id: Int)
-POST    /updateproducthandle        controllers.ProductController.updateProductHandle
+GET           /products                     controllers.ProductController.getProducts
+GET           /addproduct                   controllers.ProductController.addProduct
+POST          /addproducthandle             controllers.ProductController.addProductHandle
+GET           /updateproduct/:id            controllers.ProductController.updateProduct(id: Int)
+POST          /updateproducthandle          controllers.ProductController.updateProductHandle
+DELETE        /deleteproduct/:id            controllers.ProductController.delete(id: Int)
+
+GET           /settings                     controllers.SettingsController.getSetting(id: Int)
+GET           /addsettings                  controllers.SettingsController.addSettings
+POST          /addsettingshandle            controllers.SettingsController.addSettingsHandle
+GET           /updatesettings/:id           controllers.SettingsController.updateSettings(id: Int)
+POST          /updatesettingshandle         controllers.SettingsController.updateSettingsHandle
+
+GET           /photos                       controllers.PhotoController.getPhotos
+GET           /addphoto                     controllers.PhotoController.addPhoto
+POST          /addphotohandle               controllers.PhotoController.addPhotoHandle
+GET           /updatephotos/:id             controllers.PhotoController.updatePhoto(id: Int)
+POST          /updatephotohandle            controllers.PhotoController.updatePhotoHandle
+
+GET           /users                        controllers.UserController.getUsers
+GET           /adduser                      controllers.UserController.addUser
+POST          /adduserhandle                controllers.UserController.addUserHandle
+GET           /updateusers/:id              controllers.UserController.updateUser(id: Int)
+POST          /updateuserhandle             controllers.UserController.updateUserHandle
+
+GET           /payments                     controllers.PaymentController.getPayments
+GET           /addpayment                   controllers.PaymentController.addPayment
+POST          /addpaymenthandle             controllers.PaymentController.addPaymentHandle
+GET           /updatepayments/:id           controllers.PaymentController.updatePayment(id: Int)
+POST          /updatepaymenthandle          controllers.PaymentController.updatePaymentHandle
+
+GET           /deliverys                    controllers.DeliveryController.getDeliverys
+GET           /adddelivery                  controllers.DeliveryController.addDelivery
+POST          /adddeliveryhandle            controllers.DeliveryController.addDeliveryHandle
+GET           /updatedeliverys/:id          controllers.DeliveryController.updateDelivery(id: Int)
+POST          /updatedeliveryhandle         controllers.DeliveryController.updateDeliveryHandle
+DELETE        /deletedelivery/:id           controllers.DeliveryController.delete(id: Int)
+
+GET           /category                     controllers.CategoryController.getCategory(id: Int)
+GET           /categorys                    controllers.CategoryController.getCategorys
+GET           /addcategory                  controllers.CategoryController.addCategory
+POST          /addcategoryhandle            controllers.CategoryController.addCategoryHandle
+
+GET           /orders                       controllers.OrderController.getOrders
+GET           /addorder                     controllers.OrderController.addOrder
+POST          /addorderhandle               controllers.OrderController.addOrderHandle
+GET           /updateorders/:id             controllers.OrderController.updateOrder(id: Int)
+POST          /updateorderhandle            controllers.OrderController.updateOrderHandle
+
+GET           /baskets                      controllers.BasketController.getBaskets
+GET           /addbasket                    controllers.BasketController.addBasket
+POST          /addbaskethandle              controllers.BasketController.addBasketHandle
+GET           /updatebaskets/:id            controllers.BasketController.updateBasket(id: Int)
+POST          /updatebaskethandle           controllers.BasketController.updateBasketHandle
+GET           /deleteb/:id                  controllers.BasketController.deleteBasket(id: Int)
+DELETE        /deletebaskethandle           controllers.BasketController.deleteBasketHandle
+DELETE        /deletebasket/:id             controllers.BasketController.delete(id: Int)
+
+GET           /favourites                   controllers.FavouriteController.getFavourites
+GET           /addfavourite                 controllers.FavouriteController.addFavourite
+POST          /addfavouritehandle           controllers.FavouriteController.addFavouriteHandle
+GET           /updatefavourites/:id         controllers.FavouriteController.updateFavourite(id: Int)
+POST          /updatefavouritehandle        controllers.FavouriteController.updateFavouriteHandle
+DELETE        /deletefavourites/:id         controllers.FavouriteController.delete(id: Int)
       

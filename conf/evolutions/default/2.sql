@@ -2,17 +2,21 @@ INSERT INTO "Categories"("name") VALUES("Laptops");
 INSERT INTO "Categories"("name") VALUES("Keyboards");
 INSERT INTO "Categories"("name") VALUES("Mouses");
 INSERT INTO "Categories"("name") VALUES("Disks");
+INSERT INTO "Settings"("description", "age") VALUES("Settings description", 20);
+INSERT INTO "Delivery"("type", "price") VALUES("DHL", 15);
+INSERT INTO "Delivery"("type", "price") VALUES("PACZKA POCZTOWA", 12);
+INSERT INTO "Photos"("path") VALUES("https://www.w3schools.com/w3css/img_avatar3.png");
 
-INSERT INTO "Users"("password", "email") VALUES("Password", "darek@gmail.com");
-INSERT INTO "Users"("password", "email") VALUES("Password", "jan@gmail.com");
-INSERT INTO "Users"("password", "email") VALUES("Password", "jacek@gmail.com");
-INSERT INTO "Users"("password", "email") VALUES("Password", "anna@gmail.com");
+INSERT INTO "Users"("password", "email", "idSettings") VALUES("Password", "darek@gmail.com", 1);
+INSERT INTO "Users"("password", "email", "idSettings") VALUES("Password", "jan@gmail.com", 1);
+INSERT INTO "Users"("password", "email", "idSettings") VALUES("Password", "jacek@gmail.com", 1);
+INSERT INTO "Users"("password", "email") VALUES("Password", "anna@gmail.com", 1);
 
 
-INSERT INTO "Products"("name", "description", "idCategories", "price") VALUES("Lenovo Y700", "Laptop for gamers", 1, 5500);
-INSERT INTO "Products"("name", "description", "idCategories", "price") VALUES("Sandisk 500 GB SSD", "Speed hard disk", 4, 700);
-INSERT INTO "Products"("name", "description", "idCategories", "price") VALUES("Genesis G300", "Little keyboards for gamers", 2, 250);
-INSERT INTO "Products"("name", "description", "idCategories", "price") VALUES("ROG SICA 520", "Smart mouse for gamers", 2, 190);
+INSERT INTO "Products"("name", "description", "idCategories", "price", "idDelivery", "idPhotos") VALUES("Lenovo Y700", "Laptop for gamers", 1, 5500, 2, 1);
+INSERT INTO "Products"("name", "description", "idCategories", "price", "idDelivery", "idPhotos") VALUES("Sandisk 500 GB SSD", "Speed hard disk", 4, 700, 1, 1);
+INSERT INTO "Products"("name", "description", "idCategories", "price", "idDelivery", "idPhotos") VALUES("Genesis G300", "Little keyboards for gamers", 2, 250, 1, 1);
+INSERT INTO "Products"("name", "description", "idCategories", "price", "idDelivery", "idPhotos") VALUES("ROG SICA 520", "Smart mouse for gamers", 2, 190, 2, 1);
 
 
 # --- !Downs
@@ -21,6 +25,13 @@ DELETE FROM "Categories" WHERE name="Laptops";
 DELETE FROM "Categories" WHERE name="Keyboards";
 DELETE FROM "Categories" WHERE name="Mouses";
 DELETE FROM "Categories" WHERE name="Disks";
+
+DELETE FROM "Settings" WHERE description="Settings description";
+
+DELETE FROM "Delivery" WHERE type="DHL";
+DELETE FROM "Delivery" WHERE type="PACZKA POCZTOWA";
+
+DELETE FROM "Photos" WHERE path="https://www.w3schools.com/w3css/img_avatar3.png";
 
 DELETE FROM "Users" WHERE email="darek@gmail.com";
 DELETE FROM "Users" WHERE email="jan@gmail.com";

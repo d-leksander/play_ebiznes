@@ -1,0 +1,47 @@
+@(product: Form[UpdateProductForm], category: Seq[Category], deliverys: Seq[Delivery], photos: Seq[Photo])(implicit request: MessagesRequestHeader, flash: Flash)
+
+@import helper._
+
+@flash.get("success").getOrElse("")
+
+@form(routes.ProductController.updateProductHandle()) {
+    @helper.CSRF.formField
+    <input name="idProducts" id="idProducts" value="@product("idProducts").value" type="hidden" />
+    @inputText(product("name"))
+    @inputText(product("description"))
+    @inputText(product("price"))
+
+    <select name="idCategories" id="idCategories">
+    @for(cat <- category) {
+        @if(cat.idCategories.toString == product("idCategories").value.getOrElse(0)) {
+            <option value="@cat.idCategories" selected>@cat.name</option>
+        } else {
+            <option value="@cat.idCategories">@cat.name</option>
+        }
+    }
+    </select>
+
+    <select name="idDelivery" id="idDelivery">
+    @for(delivery <- deliverys) {
+        @if(delivery.idDelivery.toString == product("idDelivery").value.getOrElse(0)) {
+            <option value="@delivery.idDelivery" selected>@delivery.company</option>
+        } else {
+            <option value="@delivery.idDelivery">@delivery.company</option>
+        }
+    }
+    </select>
+
+    <select name="idPhotos" id="idPhotos">
+    @for(photo <- photos) {
+        @if(photo.idPhotos.toString == product("idPhotos").value.getOrElse(0)) {
+            <option value="@photo.idPhotos" selected>@photo.path</option>
+        } else {
+            <option value="@photo.idPhotos">@photo.path</option>
+        }
+    }
+    </select>
+
+    <div class="buttons">
+        <input type="submit" value="Update Product"/>
+    </div>
+}

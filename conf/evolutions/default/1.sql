@@ -1,23 +1,46 @@
 # --- !Ups
 
-CREATE TABLE "Users" (
-  "idUsers" INTEGER NOT NULL UNIQUE PRIMARY KEY AUTOINCREMENT,
-  "password" VARCHAR NOT NULL,
-  "email" VARCHAR NOT NULL
+CREATE TABLE "Settings" (
+  "idSettings" INTEGER NOT NULL UNIQUE PRIMARY KEY AUTOINCREMENT,
+  "description" TEXT NOT NULL,
+  "age" INTEGER NOT NULL
+);
+
+CREATE TABLE "Photos" (
+  "idPhotos" INTEGER NOT NULL UNIQUE PRIMARY KEY AUTOINCREMENT,
+  "path" VARCHAR NOT NULL
 );
 
 CREATE TABLE "Categories" (
   "idCategories" INTEGER NOT NULL UNIQUE PRIMARY KEY AUTOINCREMENT,
-  "name" VARCHAR(45) NOT NULL
+  "name" VARCHAR NOT NULL
+);
+
+CREATE TABLE "Delivery" (
+  "idDelivery" INTEGER NOT NULL UNIQUE PRIMARY KEY AUTOINCREMENT,
+  "type" VARCHAR NOT NULL,
+  "price" INTEGER NOT NULL
+);
+
+CREATE TABLE "Users" (
+  "idUsers" INTEGER NOT NULL UNIQUE PRIMARY KEY AUTOINCREMENT,
+  "password" VARCHAR NOT NULL,
+  "email" VARCHAR NOT NULL,
+  "idSettings" INTEGER NOT NULL,
+FOREIGN KEY(idSettings) references Settings(idSettings) ON UPDATE NO ACTION ON DELETE NO ACTION
 );
 
 CREATE TABLE "Products" (
   "idProducts" INTEGER NOT NULL UNIQUE PRIMARY KEY AUTOINCREMENT,
-  "name" VARCHAR(45) NOT NULL,
+  "name" VARCHAR NOT NULL,
   "description" TEXT NOT NULL,
   "idCategories" INTEGER NOT NULL,
   "price" INTEGER NOT NULL,
-FOREIGN KEY(idCategories) references Categories(idCategories) ON UPDATE CASCADE ON DELETE CASCADE
+  "idDelivery" INTEGER NOT NULL,
+  "idPhotos" INTEGER NOT NULL,
+FOREIGN KEY(idCategories) references Categories(idCategories) ON UPDATE CASCADE ON DELETE CASCADE,
+FOREIGN KEY(idDelivery) references Delivery(idDelivery) ON UPDATE CASCADE ON DELETE CASCADE,
+FOREIGN KEY(idPhotos) references Photos(idPhotos) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE TABLE "Baskets" (
@@ -39,20 +62,30 @@ FOREIGN KEY(idProducts) references Products(idProducts) ON UPDATE CASCADE ON DEL
 
 CREATE TABLE "Payments" (
   "idPayments" INTEGER NOT NULL UNIQUE PRIMARY KEY AUTOINCREMENT,
-  "status" VARCHAR(45) NOT NULL,
+  "status" VARCHAR NOT NULL,
   "date" DATE NOT NULL,
   "idUsers" INTEGER NOT NULL,
   "value" INTEGER NOT NULL,
 FOREIGN KEY(idUsers) references Users(idUsers) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
+CREATE TABLE "Favourites" (
+  "idFavourites" INTEGER NOT NULL UNIQUE PRIMARY KEY AUTOINCREMENT,
+  "idUsers" INTEGER NOT NULL,
+  "idProducts" INTEGER NOT NULL,
+FOREIGN KEY(idUsers) references Users(idUsers) ON UPDATE CASCADE ON DELETE CASCADE,
+FOREIGN KEY(idProducts) references Products(idProducts) ON UPDATE CASCADE ON DELETE CASCADE
+);
+
 # --- !Downs
 
+DROP TABLE "Settings"
+DROP TABLE "Photos"
+DROP TABLE "Categories"
+DROP TABLE "Delivery"
 DROP TABLE "Users"
 DROP TABLE "Products"
+DROP TABLE "Baskets"
 DROP TABLE "Orders"
 DROP TABLE "Payments"
-DROP TABLE "Categories"
-DROP TABLE "Baskets"
-
-
+DROP TABLE "Favourites"

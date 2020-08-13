@@ -1,0 +1,16 @@
+@(delivery: Form[UpdateDeliveryForm])(implicit request: MessagesRequestHeader, flash: Flash)
+
+@import helper._
+
+@flash.get("success").getOrElse("")
+
+@form(routes.DeliveryController.updateDeliveryHandle()) {
+    @helper.CSRF.formField
+    <input name="id" id="id" value="@delivery("idDelivery").value" type="hidden" />
+    @inputText(delivery("company"))
+    @inputText(delivery("price"))
+
+    <div class="buttons">
+        <input type="submit" value="Update Delivery"/>
+    </div>
+}

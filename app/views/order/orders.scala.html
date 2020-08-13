@@ -1,0 +1,12 @@
+@(orders: Seq[Order])
+<ul>
+    @for(order <- orders) {
+        <li>
+            <b>@order.idOrders</b>
+            @order.date
+            @order.idUsers
+            @order.idProducts
+            <a href="@controllers.routes.OrderController.updateOrder(order.idOrders)">Edit</a>
+        </li>
+    }
+</ul>

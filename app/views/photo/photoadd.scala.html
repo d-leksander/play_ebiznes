@@ -1,0 +1,14 @@
+@(photo: Form[CreatePhotoForm])(implicit request: MessagesRequestHeader, flash: Flash)
+
+@import helper._
+
+@flash.get("success").getOrElse("")
+
+@form(routes.PhotoController.addPhotoHandle()) {
+    @helper.CSRF.formField
+    @inputText(photo("path"))
+
+    <div class="buttons">
+        <input type="submit" value="Add Photo"/>
+    </div>
+}

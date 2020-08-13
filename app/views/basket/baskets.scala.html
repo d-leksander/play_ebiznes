@@ -1,0 +1,15 @@
+@(baskets: Seq[Basket])(implicit request: MessagesRequestHeader, flash: Flash)
+
+@flash.get("success").getOrElse("")
+
+<ul>
+@for(basket <- baskets) {
+    <li>
+        <b>@basket.idBaskets</b>
+        @basket.idUsers
+        @basket.idProducts
+        <a href="@controllers.routes.BasketController.updateBasket(basket.idBaskets)">Edit</a>
+        <a href="@controllers.routes.BasketController.deleteBasket(basket.idBaskets)">Delete</a>
+    </li>
+}
+</ul>

@@ -1,0 +1,36 @@
+@(payment: Form[UpdatePaymentForm], users: Seq[User])(implicit request: MessagesRequestHeader, flash: Flash)
+
+@import helper._
+
+@flash.get("success").getOrElse("")
+
+@form(routes.PaymentController.updatePaymentHandle()) {
+    @helper.CSRF.formField
+    @inputDate(payment("date"))
+    @inputText(payment("value"))
+    <input name="idPayments" id="idPayments" value="@payment("idPayments").value" type="hidden" />
+    <select name="status" id="status">
+    @for(status <- Seq[String]("pending", "finished")) {
+        @if(status == payment("status").value.getOrElse(0)) {
+            <option value="@status" selected>@status</option>
+        } else {
+            <option value="@status">@status</option>
+        }
+
+    }
+    </select>
+
+    <select name="idUsers" id="idUsers">
+    @for(user <- users) {
+        @if(user.idUsers.toString == payment("idUsers").value.getOrElse(0)) {
+            <option value="@user.idUsers" selected>@user.email</option>
+        } else {
+            <option value="@user.idUsers">@user.email</option>
+        }
+    }
+    </select>
+
+    <div class="buttons">
+        <input type="submit" value="Update Payment"/>
+    </div>
+}

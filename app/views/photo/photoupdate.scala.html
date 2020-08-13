@@ -1,0 +1,15 @@
+@(photo: Form[UpdatePhotoForm])(implicit request: MessagesRequestHeader, flash: Flash)
+
+@import helper._
+
+@flash.get("success").getOrElse("")
+
+@form(routes.PhotoController.updatePhotoHandle()) {
+    @helper.CSRF.formField
+    <input name="id" id="id" value="@photo("idPhotos").value" type="hidden" />
+    @inputText(photo("path"))
+
+    <div class="buttons">
+        <input type="submit" value="Update Photo"/>
+    </div>
+}

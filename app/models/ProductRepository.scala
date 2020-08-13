@@ -3,41 +3,24 @@ package models
 import javax.inject.{Inject, Singleton}
 import play.api.db.slick.DatabaseConfigProvider
 import slick.jdbc.JdbcProfile
+
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
-class ProductRepository @Inject()(dbConfigProvider: DatabaseConfigProvider, categoryRepository: CategoryRepository)(implicit ec: ExecutionContext) {
-  val dbConfig = dbConfigProvider.get[JdbcProfile]
+class ProductRepository @Inject()(dbConfigProvider: DatabaseConfigProvider)(implicit ec: ExecutionContext) {
+  private val dbConfig = dbConfigProvider.get[JdbcProfile]
 
   import dbConfig._
   import profile.api._
-  import categoryRepository.CategoryTable
 
-  val product = TableQuery[ProductTable]
-  private val category = TableQuery[CategoryTable]
+  private val product = TableQuery[ProductTable]
 
-  class ProductTable(tag: Tag) extends Table[Product](tag, "Products") {
-    def idProducts = column[Int]("idProducts", O.PrimaryKey, O.AutoInc, O.Unique)
-
-    def name = column[String]("name")
-
-    def description = column[String]("description")
-
-    def idCategories = column[Int]("idCategories")
-
-    def price = column[Int]("price")
-
-    //    def idCategories_fk = foreignKey("cat_fk", idCategories, category)(_.idCategories)
-
-    def * = (idProducts, name, description, idCategories, price) <> ((Product.apply _).tupled, Product.unapply)
-  }
-
-  def create(name: String, description: String, idCategories: Int, price: Int): Future[Product] = db.run {
-    (product.map(p => (p.name, p.description, p.idCategories, p.price))
+  def create(name: String, description: String, idCategories: Int, price: Int, idDelivery: Int, idPhotos: Int): Future[Product] = db.run {
+    (product.map(p => (p.name, p.description, p.idCategories, p.price, p.idDelivery, p.idPhotos))
 
       returning product.map(_.idProducts)
-      into { case ((name, description, idCategories, price), idProducts) => Product(idProducts, name, description, idCategories, price) }
-      ) += (name, description, idCategories, price)
+      into { case ((name, description, idCategories, price, idDelivery, idPhotos), idProducts) => Product(idProducts, name, description, idCategories, price, idDelivery, idPhotos) }
+      ) += (name, description, idCategories, price, idDelivery, idPhotos)
   }
 
   def list(): Future[Seq[Product]] = db.run {

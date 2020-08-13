@@ -3,33 +3,25 @@ package models
 import javax.inject.{Inject, Singleton}
 import play.api.db.slick.DatabaseConfigProvider
 import slick.jdbc.JdbcProfile
+
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
-class UserRepository @Inject()(dbConfigProvider: DatabaseConfigProvider)(implicit ec: ExecutionContext) {
-  val dbConfig = dbConfigProvider.get[JdbcProfile]
+class UserRepository @Inject()(dbConfigProvider: DatabaseConfigProvider, settingsRepository: SettingsRepository)(implicit ec: ExecutionContext) {
+  private val dbConfig = dbConfigProvider.get[JdbcProfile]
 
   import dbConfig._
   import profile.api._
 
-  val user = TableQuery[UserTable]
+  private val user = TableQuery[UserTable]
+  private val settings = TableQuery[SettingsTable]
 
-  class UserTable(tag: Tag) extends Table[User](tag, "Users") {
-    def idUsers = column[Int]("idUsers", O.PrimaryKey, O.AutoInc, O.Unique)
-
-    def password = column[String]("password")
-
-    def email = column[String]("email")
-
-    def * = (idUsers, password, email) <> ((User.apply _).tupled, User.unapply)
-  }
-
-  def create(password: String, email: String): Future[User] = db.run {
-    (user.map(u => (u.password, u.email))
+  def create(password: String, email: String, idSettings: Int): Future[User] = db.run {
+    (user.map(u => (u.password, u.email, u.idSettings))
 
       returning user.map(_.idUsers)
-      into { case ((password, email), idUsers) => User(idUsers, password, email) }
-      ) += (password, email)
+      into { case ((password, email, idSettings), idUsers) => User(idUsers, password, email, idSettings) }
+      ) += (password, email, idSettings)
   }
 
   def list(): Future[Seq[User]] = db.run {
@@ -38,6 +30,14 @@ class UserRepository @Inject()(dbConfigProvider: DatabaseConfigProvider)(implici
 
   def getById(idUsers: Int): Future[User] = db.run {
     user.filter(_.idUsers === idUsers).result.head
+  }
+
+  def getByIdOption(id: Int): Future[Option[User]] = db.run {
+    user.filter(_.idUsers === id).result.headOption
+  }
+
+  def getSettings(user: User): Future[Settings] = db.run {
+    settings.filter(_.idSettings === user.idSettings).result.head
   }
 
   def delete(idUsers: Int): Future[Unit] = db.run(user.filter(_.idUsers === idUsers).delete).map(_ => ())
