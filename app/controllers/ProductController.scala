@@ -5,6 +5,7 @@ import models._
 import play.api.data.Form
 import play.api.data.Forms._
 import play.api.mvc._
+import play.api.libs.json.Json
 import scala.concurrent.duration.Duration
 import scala.concurrent.{Await, ExecutionContext, Future}
 
@@ -118,6 +119,14 @@ class ProductController @Inject()(productsRepo: ProductRepository, categoryRepo:
         }
       }
     )
+  }
+
+  def getAll: Action[AnyContent] = {
+    Action.async { implicit request =>
+      productsRepo.list().map {
+        product => Ok(Json.toJson(product))
+      }
+    }
   }
 
 }

@@ -77,4 +77,62 @@ POST          /addfavouritehandle           controllers.FavouriteController.addF
 GET           /updatefavourites/:id         controllers.FavouriteController.updateFavourite(id: Int)
 POST          /updatefavouritehandle        controllers.FavouriteController.updateFavouriteHandle
 DELETE        /deletefavourites/:id         controllers.FavouriteController.delete(id: Int)
-      
+
+
+#Added JSON API
+
+GET           /api/baskets                 api.ApiBasketController.all
+GET           /api/basket/:id              api.ApiBasketController.get(id: Int)
+POST          /api/addbasket               api.ApiBasketController.add
+PUT           /api/editbasket/:id          api.ApiBasketController.edit(id: Int)
+DELETE        /api/deletebasket/:id        api.ApiBasketController.delete(id: Int)
+
+GET           /api/categorys                 api.ApiCategoryController.all
+GET           /api/category/:id              api.ApiCategoryController.get(id: Int)
+POST          /api/addcategory               api.ApiCategoryController.add
+
+GET           /api/deliverys                 api.ApiDeliveryController.all
+GET           /api/delivery/:id              api.ApiDeliveryController.get(id: Int)
+POST          /api/adddelivery               api.ApiDeliveryController.add
+PUT           /api/editdelivery/:id          api.ApiDeliveryController.edit(id: Int)
+DELETE        /api/deletedelivery/:id        api.ApiDeliveryController.delete(id: Int)
+
+GET           /api/favourites                 api.ApiFavouriteController.all
+GET           /api/favourite/:id              api.ApiFavouriteController.get(id: Int)
+POST          /api/addfavourite               api.ApiFavouriteController.add
+PUT           /api/editfavourite/:id          api.ApiFavouriteController.edit(id: Int)
+DELETE        /api/deletefavourite/:id        api.ApiFavouriteController.delete(id: Int)
+
+GET           /api/orders                 api.ApiOrderController.all
+GET           /api/order/:id              api.ApiOrderController.get(id: Int)
+POST          /api/addorder               api.ApiOrderController.add
+PUT           /api/editorder/:id          api.ApiOrderController.edit(id: Int)
+
+GET           /api/payments                 api.ApiPaymentController.all
+GET           /api/payment/:id              api.ApiPaymentController.get(id: Int)
+POST          /api/addpayment               api.ApiPaymentController.add
+PUT           /api/editpayment/:id          api.ApiPaymentController.edit(id: Int)
+
+GET           /api/photos                 api.ApiPhotoController.all
+GET           /api/photo/:id              api.ApiPhotoController.get(id: Int)
+POST          /api/addphoto               api.ApiPhotoController.add
+PUT           /api/editphoto/:id          api.ApiPhotoController.edit(id: Int)
+DELETE        /api/deletephoto/:id        api.ApiPhotoController.delete(id: Int)
+
+GET           /api/products                 api.ApiProductController.all
+GET           /api/product/:id              api.ApiProductController.get(id: Int)
+POST          /api/addproduct               api.ApiProductController.add
+PUT           /api/editproduct/:id          api.ApiProductController.edit(id: Int)
+DELETE        /api/deleteproduct/:id        api.ApiProductController.delete(id: Int)
+
+
+GET           /api/settings                 api.ApiSettingsController.all
+GET           /api/setting/:id              api.ApiSettingsController.get(id: Int)
+POST          /api/addsetting               api.ApiSettingsController.add
+PUT           /api/editsetting/:id          api.ApiSettingsController.edit(id: Int)
+
+GET           /api/users                 api.ApiUserController.all
+GET           /api/user/:id              api.ApiUserController.get(id: Int)
+POST          /api/adduser               api.ApiUserController.add
+PUT           /api/edituser/:id          api.ApiUserController.edit(id: Int)
+DELETE        /api/deleteuser/:id        api.ApiUserController.delete(id: Int)
