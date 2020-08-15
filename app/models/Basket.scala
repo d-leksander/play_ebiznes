@@ -22,6 +22,7 @@ class BasketTable(tag: Tag) extends Table[Basket](tag, "Baskets") {
   def idUsers = column[Int]("idUsers")
 }
 
+//noinspection TypeAnnotation
 object Basket {
   implicit val basketFormat = Json.format[Basket]
 }

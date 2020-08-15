@@ -8,6 +8,7 @@
     @helper.CSRF.formField
     @inputText(user("password"))
     @inputText(user("email"))
+    <!--suppress ALL -->
     <input name="id" id="id" value="@user("idUsers").value" type="hidden" />
 
     <select name="user" id="user">

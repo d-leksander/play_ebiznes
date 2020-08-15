@@ -7,12 +7,14 @@
 @form(routes.BasketController.addBasketHandle()) {
     @helper.CSRF.formField
 
+    <label for="idUsers"></label>
     <select name="idUsers" id="idUsers">
     @for(user <- users) {
         <option value="@user.idUsers">@user.email</option>
     }
     </select>
 
+    <label for="idProducts"></label>
     <select name="idProducts" id="idProducts">
     @for(product <- products) {
         <option value="@product.idProducts">@product.name</option>

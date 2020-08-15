@@ -9,6 +9,7 @@
     @inputDate(payment("date"))
     @inputText(payment("value"))
 
+    <!--suppress ALL -->
     <select name="status" id="status">
     @for(status <- Seq[String]("pending", "finished")) {
         @if(status == payment("status").value.getOrElse(0)) {

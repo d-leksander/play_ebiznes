@@ -9,6 +9,7 @@
     @inputText(user("password"))
     @inputText(user("email"))
 
+    <!--suppress ALL -->
     <select name="settings" id="settings">
     @for(settings <- settings) {
         <option value="@settings.idSettings">@settings.description</option>

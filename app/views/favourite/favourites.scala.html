@@ -2,7 +2,7 @@
 <ul>
     @for(favourite <- favourites) {
         <li>
-            <b>@favourite.idFavourites</b>
+            <strong>@favourite.idFavourites</strong>
             @favourite.idUsers
             @favourite.idProducts
             <a href="@controllers.routes.FavouriteController.updateFavourite(favourite.idFavourites)">Edit</a>

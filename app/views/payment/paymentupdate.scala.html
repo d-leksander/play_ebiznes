@@ -8,6 +8,7 @@
     @helper.CSRF.formField
     @inputDate(payment("date"))
     @inputText(payment("value"))
+    <!--suppress ALL -->
     <input name="idPayments" id="idPayments" value="@payment("idPayments").value" type="hidden" />
     <select name="status" id="status">
     @for(status <- Seq[String]("pending", "finished")) {

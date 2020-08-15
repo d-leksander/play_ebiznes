@@ -6,6 +6,7 @@
 
 @form(routes.BasketController.updateBasketHandle()) {
     @helper.CSRF.formField
+    <!--suppress ALL -->
     <input name="idBaskets" id="idBaskets" value="@basket("idBaskets").value" type="hidden" />
 
     <select name="idUsers" id="idUsers">

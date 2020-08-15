@@ -2,7 +2,7 @@
 <ul>
     @for(photo <- photos) {
         <li>
-            <b>@photo.idPhotos</b>
+            <strong>@photo.idPhotos</strong>
             @photo.path
             @* <a href="@controllers.routes.HomeController.updateProduct(photo.id)">Edit</a>*@
             @* <a href="@controllers.routes.HomeController.delete(photo.id)">Delete</a>*@

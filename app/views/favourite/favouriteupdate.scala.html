@@ -6,6 +6,9 @@
 
 @form(routes.FavouriteController.updateFavouriteHandle()) {
     @helper.CSRF.formField
+    <!--suppress ALL -->
+
+
     <input name="idFavourites" id="idFavourites" value="@favourite("idFavourites").value" type="hidden" />
 
     <select name="idUsers" id="idUsers">

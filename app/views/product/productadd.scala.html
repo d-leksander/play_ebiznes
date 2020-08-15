@@ -10,6 +10,7 @@
     @inputText(product("description"))
     @inputText(product("price"))
 
+    <!--suppress ALL -->
     <select name="idCategories" id="idCategories">
     @for(cat <- category) {
         <option value="@cat.idCategories">@cat.name</option>

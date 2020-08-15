@@ -5,7 +5,7 @@
 <ul>
 @for(basket <- baskets) {
     <li>
-        <b>@basket.idBaskets</b>
+        <strong>@basket.idBaskets</strong>
         @basket.idUsers
         @basket.idProducts
         <a href="@controllers.routes.BasketController.updateBasket(basket.idBaskets)">Edit</a>

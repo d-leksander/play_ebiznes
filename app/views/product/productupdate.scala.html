@@ -6,6 +6,7 @@
 
 @form(routes.ProductController.updateProductHandle()) {
     @helper.CSRF.formField
+    <!--suppress ALL -->
     <input name="idProducts" id="idProducts" value="@product("idProducts").value" type="hidden" />
     @inputText(product("name"))
     @inputText(product("description"))

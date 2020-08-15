@@ -9,6 +9,7 @@
     @inputDate(order("date"))
     @inputText(order("value"))
 
+    <!--suppress ALL -->
     <select name="idUsers" id="idUsers">
     @for(user <- users) {
         <option value="@user.idUsers">@user.email</option>

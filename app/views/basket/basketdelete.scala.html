@@ -7,7 +7,8 @@
 @form(routes.BasketController.deleteBasketHandle()) {
     @helper.CSRF.formField
 
-    <b>Do you want to delete basket?</b>
+    <!--suppress ALL -->
+    <strong>Do you want to delete basket?</strong>
     <input name="idBaskets" id="idBaskets" value="@basket("idBaskets").value" disabled/>
 
     <div class="buttons">

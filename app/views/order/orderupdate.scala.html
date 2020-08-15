@@ -7,6 +7,7 @@
 @form(routes.OrderController.updateOrderHandle()) {
     @helper.CSRF.formField
     @inputDate(order("date"))
+    <!--suppress ALL -->
     <input name="idOrders" id="idOrders" value="@order("idOrders").value" type="hidden" />
 
     <select name="idUsers" id="idUsers">
