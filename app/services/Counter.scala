@@ -22,6 +22,7 @@ trait Counter {
  * annotation we would get a new instance every time a [[Counter]] is
  * injected.
  */
+//noinspection SpellCheckingInspection
 @Singleton
 class AtomicCounter extends Counter {  
   private val atomicCounter = new AtomicInteger()

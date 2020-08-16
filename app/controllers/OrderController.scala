@@ -11,6 +11,7 @@ import play.api.mvc._
 import scala.concurrent.duration.Duration
 import scala.concurrent.{Await, ExecutionContext, Future}
 
+//noinspection MutatorLikeMethodIsParameterless,MutatorLikeMethodIsParameterless,MutatorLikeMethodIsParameterless,MatchToPartialFunction
 @Singleton
 class OrderController @Inject()(orderRepo: OrderRepository, userRepo: UserRepository, productRepo: ProductRepository,
                                 cc: MessagesControllerComponents)(implicit ec: ExecutionContext) extends MessagesAbstractController(cc) {

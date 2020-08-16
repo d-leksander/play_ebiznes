@@ -8,7 +8,7 @@ import play.api.mvc._
 
 import scala.concurrent.{ExecutionContext, Future}
 
-//noinspection SpellCheckingInspection,SpellCheckingInspection
+//noinspection SpellCheckingInspection,SpellCheckingInspection,MutatorLikeMethodIsParameterless,MutatorLikeMethodIsParameterless,MatchToPartialFunction
 @Singleton
 class CategoryController @Inject()(categoryRepo: CategoryRepository,
                                    cc: MessagesControllerComponents)(implicit ec: ExecutionContext) extends MessagesAbstractController(cc) {

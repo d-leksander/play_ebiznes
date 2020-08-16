@@ -15,6 +15,7 @@ class DeliveryTable(tag: Tag) extends Table[Delivery](tag, "Delivery") {
   def price = column[Int]("price")
 }
 
+//noinspection TypeAnnotation
 object Delivery {
   implicit val deliveryFormat = Json.format[Delivery]
 }

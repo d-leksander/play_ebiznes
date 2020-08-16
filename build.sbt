@@ -6,6 +6,7 @@ version := "1.0"
 //noinspection SpellCheckingInspection
 lazy val `play_ebiznes` = (project in file(".")).enablePlugins(PlayScala)
 
+//noinspection SpellCheckingInspection
 resolvers += "scalaz-bintray" at "https://dl.bintray.com/scalaz/releases"
       
 resolvers += "Akka Snapshot Repository" at "https://repo.akka.io/snapshots/"

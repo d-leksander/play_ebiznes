@@ -7,6 +7,7 @@ import play.api.data.Forms._
 import play.api.mvc._
 import scala.concurrent.duration.Duration
 import scala.concurrent.{Await, ExecutionContext, Future}
+//noinspection MutatorLikeMethodIsParameterless,MutatorLikeMethodIsParameterless,MutatorLikeMethodIsParameterless,MutatorLikeMethodIsParameterless,TypeAnnotation,TypeAnnotation,TypeAnnotation,TypeAnnotation,MatchToPartialFunction
 @Singleton
 class BasketController @Inject()(basketRepo: BasketRepository, userRepo: UserRepository, productRepo: ProductRepository,
                                  cc: MessagesControllerComponents)(implicit ec: ExecutionContext) extends MessagesAbstractController(cc) {

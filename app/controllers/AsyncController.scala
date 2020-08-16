@@ -23,6 +23,7 @@ import scala.concurrent.{ExecutionContext, Future, Promise}
  * use a different custom execution context that has a thread pool configured for
  * a blocking API.
  */
+//noinspection TypeAnnotation
 @Singleton
 class AsyncController @Inject()(cc: ControllerComponents, actorSystem: ActorSystem)(implicit exec: ExecutionContext) extends AbstractController(cc) {
 

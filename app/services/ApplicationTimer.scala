@@ -20,6 +20,7 @@ import scala.concurrent.Future
  * This class needs to run code when the server stops. It uses the
  * application's [[ApplicationLifecycle]] to register a stop hook.
  */
+//noinspection SpellCheckingInspection
 @Singleton
 class ApplicationTimer @Inject() (clock: Clock, appLifecycle: ApplicationLifecycle) {
 

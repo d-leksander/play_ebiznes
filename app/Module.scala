@@ -13,7 +13,7 @@ import services.{ApplicationTimer, AtomicCounter, Counter}
  * adding `play.modules.enabled` settings to the `application.conf`
  * configuration file.
  */
-//noinspection SpellCheckingInspection
+//noinspection SpellCheckingInspection,TypeAnnotation
 class Module extends AbstractModule {
 
   override def configure() = {
