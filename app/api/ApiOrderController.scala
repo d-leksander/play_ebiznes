@@ -11,13 +11,13 @@ import play.api.data.Forms._
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
-class OrderController @Inject()(orderRepo: OrderRepository,
+class ApiOrderController @Inject()(orderRepo: OrderRepository,
                                 cc: MessagesControllerComponents)(implicit ec: ExecutionContext) extends MessagesAbstractController(cc) {
 
   val addOrderForm: Form[CreateOrderForm] = Form {
     mapping(
       "date" -> sqlDate,
-      "idUsers" -> number,
+      "idUsers" -> nonEmptyText,
       "idProducts" -> number,
     )(CreateOrderForm.apply)(CreateOrderForm.unapply)
   }
@@ -26,7 +26,7 @@ class OrderController @Inject()(orderRepo: OrderRepository,
     mapping(
       "idOrders" -> number,
       "date" -> sqlDate,
-      "idUsers" -> number,
+      "idUsers" -> nonEmptyText,
       "idProducts" -> number,
     )(UpdateOrderForm.apply)(UpdateOrderForm.unapply)
   }
@@ -52,7 +52,7 @@ class OrderController @Inject()(orderRepo: OrderRepository,
     }
   }
 
-  def getByUserId(id: Int): Action[AnyContent] = {
+  def getByUserId(id: String): Action[AnyContent] = {
     Action.async { implicit request =>
       orderRepo.getByUser(id).map {
         order => Ok(Json.toJson(order))

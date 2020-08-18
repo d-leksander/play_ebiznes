@@ -17,7 +17,7 @@ class PaymentRepository @Inject()(dbConfigProvider: DatabaseConfigProvider, user
 
   private val payment = TableQuery[PaymentTable]
 
-  def create(status: String, date: Date, idUsers: Int, value: Int): Future[Payment] = db.run {
+  def create(status: String, date: Date, idUsers: String, value: Int): Future[Payment] = db.run {
     (payment.map(p => (p.status, p.date, p.idUsers, p.value))
 
       returning payment.map(_.idPayments)
@@ -37,7 +37,7 @@ class PaymentRepository @Inject()(dbConfigProvider: DatabaseConfigProvider, user
     payment.filter(_.idPayments === id).result.headOption
   }
 
-  def getByUser(userId: Int): Future[Seq[Payment]] = db.run {
+  def getByUser(userId: String): Future[Seq[Payment]] = db.run {
     payment.filter(_.idUsers === userId).result
   }
 

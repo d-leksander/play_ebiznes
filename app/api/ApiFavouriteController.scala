@@ -1,6 +1,6 @@
 package api
 
-import controllers.{CreateBasketForm, UpdateBasketForm}
+import controllers.{CreateFavouriteForm, UpdateFavouriteForm}
 import javax.inject._
 import models._
 import play.api.data.Form
@@ -11,51 +11,64 @@ import play.api.data.Forms._
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
-class BasketController @Inject()(basketRepo: BasketRepository,
-                                 cc: MessagesControllerComponents)(implicit ec: ExecutionContext) extends MessagesAbstractController(cc) {
+class FavouriteController @Inject()(favouriteRepo: FavouriteRepository,
+                                    cc: MessagesControllerComponents)(implicit ec: ExecutionContext) extends MessagesAbstractController(cc) {
 
-  val addBasketForm: Form[CreateBasketForm] = Form {
+  val addFavouriteForm: Form[CreateFavouriteForm] = Form {
     mapping(
-      "idUsers" -> number,
+      "idUsers" -> nonEmptyText,
       "idProducts" -> number,
-    )(CreateBasketForm.apply)(CreateBasketForm.unapply)
+    )(CreateFavouriteForm.apply)(CreateFavouriteForm.unapply)
   }
 
-  val updateBasketForm: Form[UpdateBasketForm] = Form {
+  val updateFavouriteForm: Form[UpdateFavouriteForm] = Form {
     mapping(
-      "idBaskets" -> number,
-      "idUsers" -> number,
+      "idFavourites" -> number,
+      "idUsers" -> nonEmptyText,
       "idProducts" -> number,
-    )(UpdateBasketForm.apply)(UpdateBasketForm.unapply)
+    )(UpdateFavouriteForm.apply)(UpdateFavouriteForm.unapply)
   }
 
   def all: Action[AnyContent] = {
     Action.async { implicit request =>
-      basketRepo.list().map {
-        basket => Ok(Json.toJson(basket))
+      favouriteRepo.list().map {
+        favourite => Ok(Json.toJson(favourite))
       }
     }
   }
 
-  def getByUserId(id: Int): Action[AnyContent] = {
+  def get(id: Int): Action[AnyContent] = {
     Action.async { implicit request =>
-      basketRepo.getByUser(id).map {
-        basket => Ok(Json.toJson(basket))
+      val favourite = for {
+        favourite <- favouriteRepo.getByIdOption(id)
+      } yield favourite
+
+      favourite.map {
+        case Some(favourite) => Ok(Json.toJson(favourite))
+        case None => NotFound
+      }
+    }
+  }
+
+  def getByUserId(id: String): Action[AnyContent] = {
+    Action.async { implicit request =>
+      favouriteRepo.getByUser(id).map {
+        favourite => Ok(Json.toJson(favourite))
       }
     }
   }
 
   def add(): Action[AnyContent] = Action.async { implicit request =>
-    addBasketForm.bindFromRequest.fold(
+    addFavouriteForm.bindFromRequest.fold(
       errorForm => {
-        Future.successful(BadRequest("Failed to post basket!"))
+        Future.successful(BadRequest("Failed to post favourite!"))
       },
-      basket => {
-        basketRepo.create(
-          basket.idUsers,
-          basket.idProducts
-        ).map { basket =>
-          Created(Json.toJson(basket))
+      favourite => {
+        favouriteRepo.create(
+          favourite.idUsers,
+          favourite.idProducts
+        ).map { favourite =>
+          Created(Json.toJson(favourite))
         }
       }
     )
@@ -64,16 +77,16 @@ class BasketController @Inject()(basketRepo: BasketRepository,
   def edit(id: Int): Action[JsValue] =
     Action.async(parse.json) {
       implicit request =>
-        updateBasketForm.bindFromRequest.fold(
+        updateFavouriteForm.bindFromRequest.fold(
           _ => {
-            Future.successful(BadRequest("Failed to edit basket."))
+            Future.successful(BadRequest("Failed to edit favourite."))
           },
-          basket => {
-            basketRepo.update(id,
-              Basket(
-                basket.idBaskets,
-                basket.idUsers,
-                basket.idProducts
+          favourite => {
+            favouriteRepo.update(id,
+              Favourite(
+                favourite.idFavourites,
+                favourite.idUsers,
+                favourite.idProducts
               )).map({ _ =>
               Ok
             })
@@ -82,7 +95,7 @@ class BasketController @Inject()(basketRepo: BasketRepository,
     }
 
   def delete(id: Int): Action[AnyContent] = Action {
-    basketRepo.delete(id)
-    Ok("Basket removed!")
+    favouriteRepo.delete(id)
+    Ok("Favourite removed!")
   }
 }

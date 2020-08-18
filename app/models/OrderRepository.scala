@@ -17,7 +17,7 @@ class OrderRepository @Inject()(dbConfigProvider: DatabaseConfigProvider)(implic
 
   private val order = TableQuery[OrderTable]
 
-  def create(date: Date, idUsers: Int, idProducts: Int): Future[Order] = db.run {
+  def create(date: Date, idUsers: String, idProducts: Int): Future[Order] = db.run {
     (order.map(o => (o.date, o.idUsers, o.idProducts))
 
       returning order.map(_.idOrders)
@@ -29,7 +29,7 @@ class OrderRepository @Inject()(dbConfigProvider: DatabaseConfigProvider)(implic
     order.result
   }
 
-  def getByUser(userId: Int): Future[Seq[Order]] = db.run {
+  def getByUser(userId: String): Future[Seq[Order]] = db.run {
     order.filter(_.idUsers === userId).result
   }
 

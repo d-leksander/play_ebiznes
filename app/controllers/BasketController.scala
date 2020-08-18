@@ -14,7 +14,7 @@ class BasketController @Inject()(basketRepo: BasketRepository, userRepo: UserRep
 
   val basketForm: Form[CreateBasketForm] = Form {
     mapping(
-      "idUsers" -> number,
+      "idUsers" -> nonEmptyText,
       "idProducts" -> number,
     )(CreateBasketForm.apply)(CreateBasketForm.unapply)
   }
@@ -28,7 +28,7 @@ class BasketController @Inject()(basketRepo: BasketRepository, userRepo: UserRep
   val updateBasketForm: Form[UpdateBasketForm] = Form {
     mapping(
       "idBaskets" -> number,
-      "idUsers" -> number,
+      "idUsers" -> nonEmptyText,
       "idProducts" -> number,
     )(UpdateBasketForm.apply)(UpdateBasketForm.unapply)
   }
@@ -130,8 +130,8 @@ class BasketController @Inject()(basketRepo: BasketRepository, userRepo: UserRep
     )
   }
 }
-case class CreateBasketForm(idUsers: Int, idProducts: Int)
+case class CreateBasketForm(idUsers: String, idProducts: Int)
 
 case class DeleteBasketForm(idBaskets: Int)
 
-case class UpdateBasketForm(idBaskets: Int, idUsers: Int, idProducts: Int)
+case class UpdateBasketForm(idBaskets: Int, idUsers: String, idProducts: Int)

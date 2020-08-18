@@ -3,13 +3,13 @@ package models
 import play.api.libs.json.Json
 import slick.jdbc.SQLiteProfile.api._
 
-case class Basket(idBaskets: Int, idUsers: Int, idProducts: Int)
+case class Basket(idBaskets: Int, idUsers: String, idProducts: Int)
 
 class BasketTable(tag: Tag) extends Table[Basket](tag, "Baskets") {
   val user = TableQuery[UserTable]
   val product = TableQuery[ProductTable]
 
-  def idUsersFk = foreignKey("usr_fk", idUsers, user)(_.idUsers)
+  def idUsersFk = foreignKey("usr_fk", idUsers, user)(_.id)
 
   def idProductsFk = foreignKey("pro_fk", idProducts, product)(_.idProducts)
 
@@ -19,7 +19,7 @@ class BasketTable(tag: Tag) extends Table[Basket](tag, "Baskets") {
 
   def idProducts = column[Int]("idProducts")
 
-  def idUsers = column[Int]("idUsers")
+  def idUsers = column[String]("idUsers")
 }
 
 //noinspection TypeAnnotation

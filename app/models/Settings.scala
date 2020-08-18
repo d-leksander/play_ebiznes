@@ -16,5 +16,5 @@ class SettingsTable(tag: Tag) extends Table[Settings](tag, "Settings") {
 }
 
 object Settings {
-  implicit val settingsFormat = Json.format[Settings]
+  implicit val settingsFormat: OFormat[Settings] = Json.format[Settings]
 }

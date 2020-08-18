@@ -3,15 +3,15 @@ package models
 import play.api.libs.json._
 import slick.jdbc.SQLiteProfile.api._
 
-case class Favourite(idFavourites: Int, idUsers: Int, idProducts: Int)
+case class Favourite(idFavourites: Int, idUsers: String, idProducts: Int)
 
 class FavouriteTable(tag: Tag) extends Table[Favourite](tag, "Favourites") {
   val user = TableQuery[UserTable]
   val product = TableQuery[ProductTable]
 
-  def idUsersFk = foreignKey("usr_fk", idUsers, user)(_.idUsers)
+  def idUsersFk = foreignKey("usr_fk", idUsers, user)(_.id)
 
-  def idUsers = column[Int]("idUsers")
+  def idUsers = column[String]("idUsers")
 
   def idProductsFk = foreignKey("pro_fk", idProducts, product)(_.idProducts)
 
@@ -23,5 +23,5 @@ class FavouriteTable(tag: Tag) extends Table[Favourite](tag, "Favourites") {
 }
 
 object Favourite {
-  implicit val favouriteFormat = Json.format[Favourite]
+  implicit val favouriteFormat: OFormat[Favourite] = Json.format[Favourite]
 }

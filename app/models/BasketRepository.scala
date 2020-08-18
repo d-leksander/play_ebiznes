@@ -15,7 +15,7 @@ class BasketRepository @Inject()(dbConfigProvider: DatabaseConfigProvider, produ
 
   private val basket = TableQuery[BasketTable]
 
-  def create(idUsers: Int, idProducts: Int): Future[Basket] = db.run {
+  def create(idUsers: String, idProducts: Int): Future[Basket] = db.run {
     (basket.map(b => (b.idUsers, b.idProducts))
 
       returning basket.map(_.idBaskets)
@@ -27,7 +27,7 @@ class BasketRepository @Inject()(dbConfigProvider: DatabaseConfigProvider, produ
     basket.result
   }
 
-  def getByUser(userId: Int): Future[Seq[Basket]] = db.run {
+  def getByUser(userId: String): Future[Seq[Basket]] = db.run {
     basket.filter(_.idUsers === userId).result
   }
 

@@ -15,7 +15,7 @@ class FavouriteRepository @Inject()(dbConfigProvider: DatabaseConfigProvider, pr
 
   private val favourite = TableQuery[FavouriteTable]
 
-  def create(idUsers: Int, idProducts: Int): Future[Favourite] = db.run {
+  def create(idUsers: String, idProducts: Int): Future[Favourite] = db.run {
     (favourite.map(f => (f.idUsers, f.idProducts))
 
       returning favourite.map(_.idFavourites)
@@ -27,7 +27,7 @@ class FavouriteRepository @Inject()(dbConfigProvider: DatabaseConfigProvider, pr
     favourite.result
   }
 
-  def getByUser(userId: Int): Future[Seq[Favourite]] = db.run {
+  def getByUser(userId: String): Future[Seq[Favourite]] = db.run {
     favourite.filter(_.idUsers === userId).result
   }
 
