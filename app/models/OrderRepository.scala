@@ -29,8 +29,8 @@ class OrderRepository @Inject()(dbConfigProvider: DatabaseConfigProvider)(implic
     order.result
   }
 
-  def getByUser(user_id: Int): Future[Seq[Order]] = db.run {
-    order.filter(_.idUsers === user_id).result
+  def getByUser(userId: Int): Future[Seq[Order]] = db.run {
+    order.filter(_.idUsers === userId).result
   }
 
   def getById(idOrders: Int): Future[Order] = db.run {
@@ -41,8 +41,8 @@ class OrderRepository @Inject()(dbConfigProvider: DatabaseConfigProvider)(implic
     order.filter(_.idOrders === id).result.headOption
   }
 
-  def update(id: Int, new_order: Order): Future[Unit] = {
-    val orderToUpdate: Order = new_order.copy(id)
+  def update(id: Int, newOrder: Order): Future[Unit] = {
+    val orderToUpdate: Order = newOrder.copy(id)
     db.run(order.filter(_.idOrders === id).update(orderToUpdate)).map(_ => ())
   }
 }

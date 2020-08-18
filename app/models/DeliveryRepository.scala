@@ -36,8 +36,8 @@ class DeliveryRepository @Inject()(dbConfigProvider: DatabaseConfigProvider)(imp
 
   def delete(idDelivery: Int): Future[Unit] = db.run(delivery.filter(_.idDelivery === idDelivery).delete).map(_ => ())
 
-  def update(id: Int, new_delivery: Delivery): Future[Unit] = {
-    val deliveryToUpdate: Delivery = new_delivery.copy(id)
+  def update(id: Int, newDelivery: Delivery): Future[Unit] = {
+    val deliveryToUpdate: Delivery = newDelivery.copy(id)
     db.run(delivery.filter(_.idDelivery === id).update(deliveryToUpdate)).map(_ => ())
   }
 }

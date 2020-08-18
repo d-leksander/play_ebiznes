@@ -11,7 +11,7 @@ import play.api.data.Forms._
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
-class ApiOrderController @Inject()(orderRepo: OrderRepository,
+class OrderController @Inject()(orderRepo: OrderRepository,
                                 cc: MessagesControllerComponents)(implicit ec: ExecutionContext) extends MessagesAbstractController(cc) {
 
   val addOrderForm: Form[CreateOrderForm] = Form {
@@ -48,6 +48,14 @@ class ApiOrderController @Inject()(orderRepo: OrderRepository,
       order.map {
         case Some(order) => Ok(Json.toJson(order))
         case None => NotFound
+      }
+    }
+  }
+
+  def getByUserId(id: Int): Action[AnyContent] = {
+    Action.async { implicit request =>
+      orderRepo.getByUser(id).map {
+        order => Ok(Json.toJson(order))
       }
     }
   }

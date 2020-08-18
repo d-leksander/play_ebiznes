@@ -10,7 +10,7 @@ case class Payment(idPayments: Int, status: String, date: Date, idUsers: Int, va
 class PaymentTable(tag: Tag) extends Table[Payment](tag, "Payments") {
   val users = TableQuery[UserTable]
 
-  def category_fk = foreignKey("usr_fk", idUsers, users)(_.idUsers)
+  def categoryFk = foreignKey("usr_fk", idUsers, users)(_.idUsers)
 
   def idUsers = column[Int]("idUsers")
 

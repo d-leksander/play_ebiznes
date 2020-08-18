@@ -27,8 +27,8 @@ class FavouriteRepository @Inject()(dbConfigProvider: DatabaseConfigProvider, pr
     favourite.result
   }
 
-  def getByUser(user_id: Int): Future[Seq[Favourite]] = db.run {
-    favourite.filter(_.idUsers === user_id).result
+  def getByUser(userId: Int): Future[Seq[Favourite]] = db.run {
+    favourite.filter(_.idUsers === userId).result
   }
 
   def getById(idFavourites: Int): Future[Favourite] = db.run {
@@ -41,8 +41,8 @@ class FavouriteRepository @Inject()(dbConfigProvider: DatabaseConfigProvider, pr
 
   def delete(idFavourites: Int): Future[Unit] = db.run(favourite.filter(_.idFavourites === idFavourites).delete).map(_ => ())
 
-  def update(id: Int, new_favourite: Favourite): Future[Unit] = {
-    val favouriteToUpdate: Favourite = new_favourite.copy(id)
+  def update(id: Int, newFavourite: Favourite): Future[Unit] = {
+    val favouriteToUpdate: Favourite = newFavourite.copy(id)
     db.run(favourite.filter(_.idFavourites === id).update(favouriteToUpdate)).map(_ => ())
   }
 }

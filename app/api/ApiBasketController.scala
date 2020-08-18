@@ -11,7 +11,7 @@ import play.api.data.Forms._
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
-class ApiBasketController @Inject()(basketRepo: BasketRepository,
+class BasketController @Inject()(basketRepo: BasketRepository,
                                  cc: MessagesControllerComponents)(implicit ec: ExecutionContext) extends MessagesAbstractController(cc) {
 
   val addBasketForm: Form[CreateBasketForm] = Form {
@@ -37,15 +37,10 @@ class ApiBasketController @Inject()(basketRepo: BasketRepository,
     }
   }
 
-  def get(id: Int): Action[AnyContent] = {
+  def getByUserId(id: Int): Action[AnyContent] = {
     Action.async { implicit request =>
-      val basket = for {
-        basket <- basketRepo.getByIdOption(id)
-      } yield basket
-
-      basket.map {
-        case Some(basket) => Ok(Json.toJson(basket))
-        case None => NotFound
+      basketRepo.getByUser(id).map {
+        basket => Ok(Json.toJson(basket))
       }
     }
   }

@@ -9,9 +9,9 @@ class BasketTable(tag: Tag) extends Table[Basket](tag, "Baskets") {
   val user = TableQuery[UserTable]
   val product = TableQuery[ProductTable]
 
-  def idUsers_fk = foreignKey("usr_fk", idUsers, user)(_.idUsers)
+  def idUsersFk = foreignKey("usr_fk", idUsers, user)(_.idUsers)
 
-  def idProducts_fk = foreignKey("pro_fk", idProducts, product)(_.idProducts)
+  def idProductsFk = foreignKey("pro_fk", idProducts, product)(_.idProducts)
 
   def * = (idBaskets, idUsers, idProducts) <> ((Basket.apply _).tupled, Basket.unapply)
 

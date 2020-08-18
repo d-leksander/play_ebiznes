@@ -37,12 +37,12 @@ class PaymentRepository @Inject()(dbConfigProvider: DatabaseConfigProvider, user
     payment.filter(_.idPayments === id).result.headOption
   }
 
-  def getByUser(user_id: Int): Future[Seq[Payment]] = db.run {
-    payment.filter(_.idUsers === user_id).result
+  def getByUser(userId: Int): Future[Seq[Payment]] = db.run {
+    payment.filter(_.idUsers === userId).result
   }
 
-  def update(idPayments: Int, new_payment: Payment): Future[Unit] = {
-    val paymentToUpdate: Payment = new_payment.copy(idPayments)
+  def update(idPayments: Int, newPayment: Payment): Future[Unit] = {
+    val paymentToUpdate: Payment = newPayment.copy(idPayments)
     db.run(payment.filter(_.idPayments === idPayments).update(paymentToUpdate)).map(_ => ())
   }
 }

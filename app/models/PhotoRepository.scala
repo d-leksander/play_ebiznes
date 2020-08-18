@@ -36,8 +36,8 @@ class PhotoRepository @Inject()(dbConfigProvider: DatabaseConfigProvider)(implic
 
   def delete(idPhotos: Int): Future[Unit] = db.run(photo.filter(_.idPhotos === idPhotos).delete).map(_ => ())
 
-  def update(id: Int, new_photo: Photo): Future[Unit] = {
-    val photoToUpdate: Photo = new_photo.copy(id)
+  def update(id: Int, newPhoto: Photo): Future[Unit] = {
+    val photoToUpdate: Photo = newPhoto.copy(id)
     db.run(photo.filter(_.idPhotos === id).update(photoToUpdate)).map(_ => ())
   }
 }

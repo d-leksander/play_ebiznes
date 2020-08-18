@@ -10,15 +10,15 @@ class ProductTable(tag: Tag) extends Table[Product](tag, "Products") {
   val photo = TableQuery[PhotoTable]
   val delivery = TableQuery[DeliveryTable]
 
-  def idCategories_fk = foreignKey("cat_fk", idCategories, category)(_.idCategories)
+  def idCategoriesFk = foreignKey("cat_fk", idCategories, category)(_.idCategories)
 
   def idCategories = column[Int]("idCategories")
 
-  def idDelivery_fk = foreignKey("del_fk", idDelivery, delivery)(_.idDelivery)
+  def idDeliveryFk = foreignKey("del_fk", idDelivery, delivery)(_.idDelivery)
 
   def idDelivery = column[Int]("idDelivery")
 
-  def idPhotos_fk = foreignKey("pho_fk", idPhotos, photo)(_.idPhotos)
+  def idPhotosFk = foreignKey("pho_fk", idPhotos, photo)(_.idPhotos)
 
   def idPhotos = column[Int]("idPhotos")
 

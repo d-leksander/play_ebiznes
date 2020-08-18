@@ -27,8 +27,8 @@ class ProductRepository @Inject()(dbConfigProvider: DatabaseConfigProvider)(impl
     product.result
   }
 
-  def getByCategory(category_id: Int): Future[Seq[Product]] = db.run {
-    product.filter(_.idCategories === category_id).result
+  def getByCategory(categoryId: Int): Future[Seq[Product]] = db.run {
+    product.filter(_.idCategories === categoryId).result
   }
 
   def getById(idProducts: Int): Future[Product] = db.run {
@@ -39,14 +39,14 @@ class ProductRepository @Inject()(dbConfigProvider: DatabaseConfigProvider)(impl
     product.filter(_.idProducts === idProducts).result.headOption
   }
 
-  def getByCategories(category_ids: List[Int]): Future[Seq[Product]] = db.run {
-    product.filter(_.idCategories inSet category_ids).result
+  def getByCategories(categoryIds: List[Int]): Future[Seq[Product]] = db.run {
+    product.filter(_.idCategories inSet categoryIds).result
   }
 
   def delete(idProducts: Int): Future[Unit] = db.run(product.filter(_.idProducts === idProducts).delete).map(_ => ())
 
-  def update(id: Int, new_product: Product): Future[Unit] = {
-    val productToUpdate: Product = new_product.copy(id)
+  def update(id: Int, newProduct: Product): Future[Unit] = {
+    val productToUpdate: Product = newProduct.copy(id)
     db.run(product.filter(_.idProducts === id).update(productToUpdate)).map(_ => ())
   }
 }

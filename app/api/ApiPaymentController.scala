@@ -11,7 +11,7 @@ import play.api.data.Forms._
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
-class ApiPaymentController @Inject()(paymentRepo: PaymentRepository,
+class PaymentController @Inject()(paymentRepo: PaymentRepository,
                                   cc: MessagesControllerComponents)(implicit ec: ExecutionContext) extends MessagesAbstractController(cc) {
 
   val addPaymentForm: Form[CreatePaymentForm] = Form {
@@ -50,6 +50,14 @@ class ApiPaymentController @Inject()(paymentRepo: PaymentRepository,
       payment.map {
         case Some(payment) => Ok(Json.toJson(payment))
         case None => NotFound
+      }
+    }
+  }
+
+  def getByUserId(id: Int): Action[AnyContent] = {
+    Action.async { implicit request =>
+      paymentRepo.getByUser(id).map {
+        payment => Ok(Json.toJson(payment))
       }
     }
   }

@@ -27,8 +27,8 @@ class BasketRepository @Inject()(dbConfigProvider: DatabaseConfigProvider, produ
     basket.result
   }
 
-  def getByUser(user_id: Int): Future[Seq[Basket]] = db.run {
-    basket.filter(_.idUsers === user_id).result
+  def getByUser(userId: Int): Future[Seq[Basket]] = db.run {
+    basket.filter(_.idUsers === userId).result
   }
 
   def getById(idBaskets: Int): Future[Basket] = db.run {
@@ -41,8 +41,8 @@ class BasketRepository @Inject()(dbConfigProvider: DatabaseConfigProvider, produ
 
   def delete(id: Int): Future[Unit] = db.run(basket.filter(_.idBaskets === id).delete).map(_ => ())
 
-  def update(id: Int, new_basket: Basket): Future[Unit] = {
-    val basketToUpdate: Basket = new_basket.copy(id)
+  def update(id: Int, newBasket: Basket): Future[Unit] = {
+    val basketToUpdate: Basket = newBasket.copy(id)
     db.run(basket.filter(_.idBaskets === id).update(basketToUpdate)).map(_ => ())
   }
 }

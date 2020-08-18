@@ -42,8 +42,8 @@ class UserRepository @Inject()(dbConfigProvider: DatabaseConfigProvider, setting
 
   def delete(idUsers: Int): Future[Unit] = db.run(user.filter(_.idUsers === idUsers).delete).map(_ => ())
 
-  def update(idUsers: Int, new_user: User): Future[Unit] = {
-    val userToUpdate: User = new_user.copy(idUsers)
+  def update(idUsers: Int, newUser: User): Future[Unit] = {
+    val userToUpdate: User = newUser.copy(idUsers)
     db.run(user.filter(_.idUsers === idUsers).update(userToUpdate)).map(_ => ())
   }
 }

@@ -34,8 +34,8 @@ class SettingsRepository @Inject()(dbConfigProvider: DatabaseConfigProvider)(imp
     settings.result
   }
 
-  def update(id: Int, new_settings: Settings): Future[Unit] = {
-    val settingsToUpdate: Settings = new_settings.copy(id)
+  def update(id: Int, newSettings: Settings): Future[Unit] = {
+    val settingsToUpdate: Settings = newSettings.copy(id)
     db.run(settings.filter(_.idSettings === id).update(settingsToUpdate)).map(_ => ())
   }
 }
