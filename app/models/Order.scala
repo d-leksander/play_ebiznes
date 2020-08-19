@@ -11,7 +11,7 @@ class OrderTable(tag: Tag) extends Table[Order](tag, "Orders") {
   val user = TableQuery[UserTable]
   val product = TableQuery[ProductTable]
 
-  def idUsersFk = foreignKey("usr_fk", idUsers, user)(_.idU)
+  def idUsersFk = foreignKey("usr_fk", idUsers, user)(_.id)
 
   def idUsers = column[String]("idUsers")
 

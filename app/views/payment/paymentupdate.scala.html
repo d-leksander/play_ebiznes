@@ -23,10 +23,10 @@
 
     <select name="idUsers" id="idUsers">
     @for(user <- users) {
-        @if(user.idUsers.toString == payment("idUsers").value.getOrElse(0)) {
-            <option value="@user.idUsers" selected>@user.email</option>
+        @if(user.id.toString == payment("idUsers").value.getOrElse(0)) {
+            <option value="@user.id" selected>@user.email</option>
         } else {
-            <option value="@user.idUsers">@user.email</option>
+            <option value="@user.id">@user.email</option>
         }
     }
     </select>

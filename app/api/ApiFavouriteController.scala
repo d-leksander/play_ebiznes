@@ -11,7 +11,7 @@ import play.api.data.Forms._
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
-class FavouriteController @Inject()(favouriteRepo: FavouriteRepository,
+class ApiFavouriteController @Inject()(favouriteRepo: FavouriteRepository,
                                     cc: MessagesControllerComponents)(implicit ec: ExecutionContext) extends MessagesAbstractController(cc) {
 
   val addFavouriteForm: Form[CreateFavouriteForm] = Form {

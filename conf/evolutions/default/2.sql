@@ -2,15 +2,11 @@ INSERT INTO "Categories"("name") VALUES("Laptops");
 INSERT INTO "Categories"("name") VALUES("Keyboards");
 INSERT INTO "Categories"("name") VALUES("Mouses");
 INSERT INTO "Categories"("name") VALUES("Disks");
-INSERT INTO "Settings"("description", "age") VALUES("Settings description", 20);
+
 INSERT INTO "Delivery"("type", "price") VALUES("DHL", 15);
 INSERT INTO "Delivery"("type", "price") VALUES("PACZKA POCZTOWA", 12);
 INSERT INTO "Photos"("path") VALUES("https://www.w3schools.com/w3css/img_avatar3.png");
 
-INSERT INTO "Users"("password", "email", "idSettings") VALUES("Password", "darek@gmail.com", 1);
-INSERT INTO "Users"("password", "email", "idSettings") VALUES("Password", "jan@gmail.com", 1);
-INSERT INTO "Users"("password", "email", "idSettings") VALUES("Password", "jacek@gmail.com", 1);
-INSERT INTO "Users"("password", "email") VALUES("Password", "anna@gmail.com", 1);
 
 
 INSERT INTO "Products"("name", "description", "idCategories", "price", "idDelivery", "idPhotos") VALUES("Lenovo Y700", "Laptop for gamers", 1, 5500, 2, 1);
@@ -26,17 +22,13 @@ DELETE FROM "Categories" WHERE name="Keyboards";
 DELETE FROM "Categories" WHERE name="Mouses";
 DELETE FROM "Categories" WHERE name="Disks";
 
-DELETE FROM "Settings" WHERE description="Settings description";
+
 
 DELETE FROM "Delivery" WHERE type="DHL";
 DELETE FROM "Delivery" WHERE type="PACZKA POCZTOWA";
 
 DELETE FROM "Photos" WHERE path="https://www.w3schools.com/w3css/img_avatar3.png";
 
-DELETE FROM "Users" WHERE email="darek@gmail.com";
-DELETE FROM "Users" WHERE email="jan@gmail.com";
-DELETE FROM "Users" WHERE email="jacek@gmail.com";
-DELETE FROM "Users" WHERE email="anna@gmail.com";
 
 DELETE FROM "Products" WHERE name="Lenovo Y700";
 DELETE FROM "Products" WHERE name="Sandisk 500 GB SSD";
