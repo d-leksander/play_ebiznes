@@ -32,6 +32,7 @@ libraryDependencies ++= Seq(
   "com.iheart" %% "ficus" % "1.4.3"
 )
 
-unmanagedResourceDirectories in Test <+=  baseDirectory ( _ /"target/web/public/test" )  
+unmanagedResourceDirectories in Test <+=  baseDirectory ( _ /"target/web/public/test" )
+
 
       
