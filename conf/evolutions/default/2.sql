@@ -1,3 +1,5 @@
+# --- !Ups
+
 INSERT INTO "Categories"("name") VALUES("Laptops");
 INSERT INTO "Categories"("name") VALUES("Keyboards");
 INSERT INTO "Categories"("name") VALUES("Mouses");
@@ -21,6 +23,7 @@ DELETE FROM "Categories" WHERE name="Laptops";
 DELETE FROM "Categories" WHERE name="Keyboards";
 DELETE FROM "Categories" WHERE name="Mouses";
 DELETE FROM "Categories" WHERE name="Disks";
+DELETE FROM "Categories" WHERE name="cat";
 
 
 
